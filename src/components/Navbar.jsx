@@ -13,41 +13,11 @@ export default function Navbar() {
         <h5>THE MOVIE</h5>
       </h1>
       <p>항목별 영화 리스트</p>
-      <ul className="narbar_links">
-        <li>
-          <a
-            href=""
-            onClick={(e) => {
-              e.preventDefault();
-              this.props.onChangeYear("인기순");
-            }}
-          >
-            인기순
-          </a>
-        </li>
-        <li>
-          <a
-            href=""
-            onClick={(e) => {
-              e.preventDefault();
-              this.props.onChangeYear("평점순");
-            }}
-          >
-            평점순
-          </a>
-        </li>
-        <li>
-          <a
-            href=""
-            onClick={(e) => {
-              e.preventDefault();
-              this.props.onChangeYear("최신순");
-            }}
-          >
-            최신순
-          </a>
-        </li>
-      </ul>
+      <di className="navbar_links">
+        <a href="">인기순</a>
+        <a href="">평점순</a>
+        <a href="">최신순</a>
+      </di>
     </div>
   );
 }
