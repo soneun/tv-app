@@ -1,0 +1,11 @@
+@font-face {
+  font-family: "Paperlogy-6SemiBold";
+  src: url(./assets/fonts/Paperlogy-6SemiBold.ttf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Paperlogy-6SemiBold", sans-serif;
+}
