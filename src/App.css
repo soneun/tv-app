@@ -1,5 +1,5 @@
 .app {
   display: grid;
-  grid-template-rows: 80px auto;
+  grid-template-rows: 200px auto;
   text-align: center;
 }
