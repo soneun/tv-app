@@ -33,4 +33,4 @@
 - **TMDB API**: 영화 데이터 가져오기
 - **Lodash**: 정렬 및 필터링을 위한 유틸리티 라이브러리
 
-[배포주소]
+[배포주소] https://tv-app-soneun.netlify.app/
