@@ -1,8 +1,36 @@
-# React + Vite
+# 영화 목록 애플리케이션 🎬🍿
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+이 애플리케이션은 사용자가 영화 리스트를 보고, 필터링하고, 검색하고, 정렬할 수 있는 기능을 제공합니다. "영화 목록"은 `React`와 `TMDB API`를 활용하여 최신 영화를 실시간으로 받아오고, 다양한 기준에 따라 영화들을 정렬하고 필터링할 수 있습니다.
 
-Currently, two official plugins are available:
+## 주요 기능 ✨
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1. 영화 검색 🔍
+
+- 사용자가 원하는 영화 제목을 검색할 수 있는 입력창이 제공됩니다.
+- 검색어에 맞는 영화들을 API에서 받아와 화면에 표시합니다.
+
+### 2. 필터링 기능 🔥
+
+- 영화의 평점에 따라 필터링할 수 있습니다.
+  - 8점 이상 ⭐
+  - 7점 이상 👍
+  - 6점 이상 😊
+- 특정 평점을 선택하면 해당 평점 이상의 영화들만 필터링됩니다.
+
+### 3. 정렬 기능 🏆
+
+- 영화를 "출시일" 또는 "평점" 기준으로 오름차순(Asc) 또는 내림차순(Desc)으로 정렬할 수 있습니다.
+  - 출시일 기준 정렬
+  - 평점 기준 정렬
+
+### 4. 다양한 영화 카테고리 🎥
+
+- "인기 영화", "상영 예정 영화" 등 여러 종류의 영화 카테고리를 선택하여 해당 카테고리의 영화들을 확인할 수 있습니다.
+
+## 기술 스택 ⚙️
+
+- **React**: 사용자 인터페이스를 구축하는 데 사용
+- **TMDB API**: 영화 데이터 가져오기
+- **Lodash**: 정렬 및 필터링을 위한 유틸리티 라이브러리
+
+[배포주소]
