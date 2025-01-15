@@ -3,17 +3,40 @@ import popcorn from "../assets/popcorn.png";
 import "./MovieList.css";
 import MovieCard from "./MovieCard";
 import _ from "lodash";
-import SearchBox from "./SearchBox";
 
 export default function MovieList({ type, title, emoji }) {
   const [movies, setMovies] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
+
   const [filterMovies, setFilterMovies] = useState([]);
   const [minRating, setMinRating] = useState(0);
   const [sort, setSort] = useState({
     by: "default",
     order: "asc",
   });
+  //serchQuery 추가
+  const [searchQuery, setSearchQuery] = useState("");
+  //선호작 추가
+  const [favoriteMovies, setFavoriteMovies] = useState([]);
+
+  const handleAddFavorite = (movie) => {
+    //이미 선호작에 존재하면 추가하지 않도록 방지
+    if (!favoriteMovies.some((fav) => fav.id === movie.id)) {
+      setFavoriteMovies((prev) => [...prev, movie]);
+    }
+  };
+  //페이지가 로드될 때 로컬 저장소에서 선호작 목록 불러오기
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem("favoriteMovies"));
+    if (storedFavorites) {
+      setFavoriteMovies(storedFavorites);
+    }
+  }, []);
+  //선호작 목록을 로컬 저장소에 저장
+  useEffect(() => {
+    if (favoriteMovies.length > 0) {
+      localStorage.setItem("favoriteMovies", JSON.stringify(favoriteMovies));
+    }
+  }, [favoriteMovies]);
 
   const handleSort = (e) => {
     const { name, value } = e.target;
@@ -33,10 +56,12 @@ export default function MovieList({ type, title, emoji }) {
     }
   };
 
-  const fetchMoveis = () => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/${type}?api_key=396a3dc80a27dc4e3614be3d35bc3898&language=ko`
-    )
+  //검색 기능 url 추가
+  const fetchMoveis = (query = "") => {
+    const url = query
+      ? `https://api.themoviedb.org/3/search/movie?api_key=396a3dc80a27dc4e3614be3d35bc3898&language=ko&query=${query}`
+      : `https://api.themoviedb.org/3/movie/${type}?api_key=396a3dc80a27dc4e3614be3d35bc3898&language=ko`;
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
         setMovies(data.results);
@@ -44,18 +69,6 @@ export default function MovieList({ type, title, emoji }) {
       })
       .catch((err) => console.log(err));
   };
-
-  //검색어
-  useEffect(() => {
-    if (searchValue) {
-      const filteredMovies = movies.filter((movie) =>
-        movie.title.toLowerCase().includes(searchValue.toLowerCase())
-      );
-      setFilterMovies(filteredMovies);
-    } else {
-      setFilterMovies(movies);
-    }
-  }, [searchValue, movies]); // Re-filter movies when searchValue changes
 
   //sort 값이 업데이트 될때 마다 실행
   useEffect(() => {
@@ -65,10 +78,24 @@ export default function MovieList({ type, title, emoji }) {
     }
   }, [sort]);
 
+  //type 추가(첫번재 실행)
   useEffect(() => {
     fetchMoveis();
-  }, []);
+  }, [type]);
 
+  //검색기능 함수
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  //검색어 바뀔때 리셋
+  useEffect(() => {
+    if (searchQuery.trim() !== "") {
+      fetchMoveis(searchQuery);
+    } else {
+      fetchMoveis();
+    }
+  }, [searchQuery]);
   return (
     <section id={`${type}`} className="movie_list">
       <header className="align_center movie_list_header">
@@ -111,11 +138,6 @@ export default function MovieList({ type, title, emoji }) {
             </li>
           </ul>
 
-          <SearchBox
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-          />
-
           <select
             name="by"
             id=""
@@ -135,13 +157,35 @@ export default function MovieList({ type, title, emoji }) {
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
           </select>
+          {/* 검색창 */}
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={handleSearch}
+            placeholder="영화 검색..."
+            className="movie_search_input"
+          />
         </div>
       </header>
 
       <div className="movie_cards">
         {filterMovies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          <MovieCard key={movie.id} movie={movie}>
+            {/* 선호작 추가 버튼 */}
+            <button onClick={() => handleAddFavorite(movie)}>
+              선호작 등록
+            </button>
+          </MovieCard>
         ))}
+      </div>
+
+      <div>
+        <h3>선호작 목록</h3>
+        <div className="movie_cards">
+          {favoriteMovies.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </div>
       </div>
     </section>
   );
