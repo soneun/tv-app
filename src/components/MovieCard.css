@@ -39,7 +39,10 @@
 
 .movie_details_heading {
   font-size: 16px;
-  color: #ffe400;
+  color: white;
+}
+.movie_card:hover .movie_details_heading {
+  opacity: 1;
 }
 
 .movie_date_rate {
@@ -47,10 +50,10 @@
   font-size: 12px;
   font-weight: 500;
   margin: 5px 0;
-  color: #ffe400;
+  color: white;
 }
 
-.card_emoji {
+.card_logo {
   width: 20px;
   height: 20px;
   margin-left: 5px;

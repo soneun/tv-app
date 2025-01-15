@@ -4,9 +4,13 @@ import "./MovieCard.css";
 
 export default function MovieCard({ movie }) {
   return (
-    <a className="movie_card">
+    <a
+      href={`https://www.themoviedb.org/movie/${movie.id}?language=ko`}
+      target="_blank"
+      className="movie_card"
+    >
       <img
-        src="https://t1.daumcdn.net/movie/947a0d62f2772aa0f5c73b86b631779ef1183879"
+        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt="movie poster"
         className="movie_poster"
       />
@@ -20,7 +24,9 @@ export default function MovieCard({ movie }) {
             <img src={star} alt="rating icon" className="card_logo" />
           </p>
         </div>
-        <p className="movie_description">{movie.overview}</p>
+        <p className="movie_description">
+          {movie.overview.slice(0, 100) + "..."}
+        </p>
       </div>
     </a>
   );

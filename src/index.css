@@ -9,3 +9,12 @@
   box-sizing: border-box;
   font-family: "Paperlogy-6SemiBold", sans-serif;
 }
+
+.align_center {
+  display: flex;
+  align-items: center;
+}
+
+html {
+  scroll-behavior: smooth;
+}
