@@ -15,28 +15,6 @@ export default function MovieList({ type, title, emoji }) {
   });
   //serchQuery 추가
   const [searchQuery, setSearchQuery] = useState("");
-  //선호작 추가
-  const [favoriteMovies, setFavoriteMovies] = useState([]);
-
-  const handleAddFavorite = (movie) => {
-    //이미 선호작에 존재하면 추가하지 않도록 방지
-    if (!favoriteMovies.some((fav) => fav.id === movie.id)) {
-      setFavoriteMovies((prev) => [...prev, movie]);
-    }
-  };
-  //페이지가 로드될 때 로컬 저장소에서 선호작 목록 불러오기
-  useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem("favoriteMovies"));
-    if (storedFavorites) {
-      setFavoriteMovies(storedFavorites);
-    }
-  }, []);
-  //선호작 목록을 로컬 저장소에 저장
-  useEffect(() => {
-    if (favoriteMovies.length > 0) {
-      localStorage.setItem("favoriteMovies", JSON.stringify(favoriteMovies));
-    }
-  }, [favoriteMovies]);
 
   const handleSort = (e) => {
     const { name, value } = e.target;
@@ -170,22 +148,8 @@ export default function MovieList({ type, title, emoji }) {
 
       <div className="movie_cards">
         {filterMovies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie}>
-            {/* 선호작 추가 버튼 */}
-            <button onClick={() => handleAddFavorite(movie)}>
-              선호작 등록
-            </button>
-          </MovieCard>
+          <MovieCard key={movie.id} movie={movie} />
         ))}
-      </div>
-
-      <div>
-        <h3>선호작 목록</h3>
-        <div className="movie_cards">
-          {favoriteMovies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
-        </div>
       </div>
     </section>
   );
